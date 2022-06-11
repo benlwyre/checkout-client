@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(){
+      super();
+      this.state = { url: "" }
+  }
+  
+  confirmCheckout = async () => {
+    fetch("/api")
+    .then((res) => res.json())
+    .then(json => this.setState({ url: json.url }));
+  }
+
+  componentDidUpdate(prevProps,prevState) {
+    if (prevState.url !== this.state.url ) {
+      window.location.replace(this.state.url)
+    }
+  }
+
+  render () {
+    return (
+      <div className="App">
+        <button onClick={this.confirmCheckout}>Checkout!</button>
+      </div>
+    );
+  }
 }
 
 export default App;

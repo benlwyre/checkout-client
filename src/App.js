@@ -19,15 +19,13 @@ class App extends React.Component {
   componentDidUpdate(prevProps,prevState) {
     if (prevState.reservation !== this.state.reservation ) {
       console.log(this.state.reservation);
-      var widget = new window.Wyre({
+      new window.Wyre({
         env: 'test',
-        reservation: this.state.reservation,
         operation: {
-          type: 'debitcard-hosted-dialog'
+          reservation: this.state.reservation,
+          type: 'debitcard-hosted'
         }
       });
-
-      widget.open();
     }
   }
 
